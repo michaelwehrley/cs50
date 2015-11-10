@@ -24,14 +24,13 @@
 // ##
 
 #include <stdio.h>
+#define FIRST_ROW_WITH_BLOCKS 1;
 
-// copy input to output; 2nd version
 void display_row(int height);
 
 int main(void)
 {
   int height;
-
   do
   {
     printf("height: ");
@@ -44,21 +43,17 @@ int main(void)
 
 void display_row(int height)
 {
-  int row = 0, spaces;
-  while (row < (height - 1))
+  int i, row = FIRST_ROW_WITH_BLOCKS;
+  while (row < height)
   {
-    int i = 2, spaces = height - row;
-    while (i < spaces)
+    for (i = 1; i < (height - row); i++)
     {
       printf(" ");
-      i++;
     }
 
-    int ii = 0;
-    while (ii < (row + 2))
+    for (i = 0; i < (row + 1); i++)
     {
       printf("#");
-      ii++;
     }
     printf("\n");
     row++;
