@@ -28,11 +28,30 @@
 // copy input to output; 2nd version
 int main(void)
 {
-  int h;
+  int height, row = 0;
 
-  printf("How tall should the tower be?");
-  // h = getchar(); - referenced 4 == 52 lol ASCII
-  scanf("%d", &h);
-  // if...
-  printf("%d blocks\n", h);
+  do
+  {
+    printf("height: ");
+    scanf(" %d", &height);
+  }
+  while (height < 1 || height > 23);
+  while (row < (height - 1))
+  {
+    int i = 2;
+    while (i < (height - row))
+    {
+      printf(" ");
+      i++;
+    }
+
+    int ii = 0;
+    while (ii < (row + 2))
+    {
+      printf("#");
+      ii++;
+    }
+    printf("\n");
+    row++;
+  }
 }
