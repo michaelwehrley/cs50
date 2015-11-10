@@ -26,9 +26,11 @@
 #include <stdio.h>
 
 // copy input to output; 2nd version
+void display_row(int height);
+
 int main(void)
 {
-  int height, row = 0;
+  int height;
 
   do
   {
@@ -36,10 +38,17 @@ int main(void)
     scanf(" %d", &height);
   }
   while (height < 1 || height > 23);
+
+  display_row(height);
+}
+
+void display_row(int height)
+{
+  int row = 0, spaces;
   while (row < (height - 1))
   {
-    int i = 2;
-    while (i < (height - row))
+    int i = 2, spaces = height - row;
+    while (i < spaces)
     {
       printf(" ");
       i++;
