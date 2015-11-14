@@ -8,3 +8,17 @@
 // jharvard@appliance (~/Dropbox/pset2): ./initials
 // robert thomas bowden
 // RTB
+
+#include <stdio.h>
+
+int main(void)
+{
+  char name[200];
+  char first_letter;
+
+  printf("What is your first name?\n");
+  scanf(" %s", name);
+  first_letter = name[0];
+
+  printf("Your initials are %c\n", first_letter);
+}
