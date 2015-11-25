@@ -10,30 +10,34 @@
 // RTB
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
 int main(void)
 {
-  int i = 0;
-  char *name;
-  char initials[] = "";
-
+  // char *initials = malloc(3 * sizeof(char));
   printf("What is your name?\n");
-  scanf("%[^\n]s", name);
-  int length = strlen(name);
-
-  name[0] = toupper(name[0]);
-  initials[0] = toupper(name[0]);
-  while (i < length)
+  char name[100];
+  char *pname;
+  pname = &name[0];
+  // scanf("%[^\n]s", pname);
+  scanf("%[^\n]s", &name[0]);
+  int count = strlen(pname);
+  // int count = strlen(name);
+  // printf("%d\n", count);
+  for (int i = 0; i < count; ++i)
   {
-    // printf("string: %c\n", toupper(name[i]));
-    if (isspace(name[i])) // change to ascii?
-    {
-      initials[0] = toupper(name[0]);
-    }
-    i++;
+    // printf("%c\n", name[i]);
+    // printf("%c\n", pname[3]);
+    // printf("%s\n", &pname[i]); // why?
+    // kate
+    // ate
+    // te
+    // e
+    printf("%c\n", *(pname + i));
   }
+  printf("%s\n", &pname[0]);
+  printf("%s\n", &name[1]);
   printf("%s\n", name);
-  printf("%s\n", initials);
 }
