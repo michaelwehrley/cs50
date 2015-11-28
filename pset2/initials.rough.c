@@ -16,17 +16,28 @@
 
 int main(void)
 {
+  // char *initials = malloc(3 * sizeof(char));
   printf("What is your name?\n");
+  char name[100];
   char *pname;
-  scanf("%[^\n]s", pname);
-  int count;
-  count = strlen(pname);
-  printf("%c\n", toupper(*(pname)));
+  pname = &name[0];
+  // scanf("%[^\n]s", pname);
+  scanf("%[^\n]s", &name[0]);
+  int count = strlen(pname);
+  // int count = strlen(name);
+  // printf("%d\n", count);
   for (int i = 0; i < count; ++i)
   {
-    if (*(pname + i) == ' ')
-    {
-      printf("%c", toupper(*((pname + i + 1))));
-    }
+    // printf("%c\n", name[i]);
+    // printf("%c\n", pname[3]);
+    // printf("%s\n", &pname[i]); // why?
+    // kate
+    // ate
+    // te
+    // e
+    printf("%c\n", *(pname + i));
   }
+  printf("%s\n", &pname[0]);
+  printf("%s\n", &name[0]);
+  printf("%s\n", name);
 }
