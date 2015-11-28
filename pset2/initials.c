@@ -16,12 +16,13 @@
 
 int main(void)
 {
-  printf("What is your name?\n");
   char *pname;
-  scanf("%[^\n]s", pname);
   int count;
+
+  printf("What is your name?\n");
+  scanf("%[^\n]s", pname);
   count = strlen(pname);
-  printf("%c\n", toupper(*(pname)));
+  printf("%c", toupper(*(pname)));
   for (int i = 0; i < count; ++i)
   {
     if (*(pname + i) == ' ')
@@ -29,4 +30,5 @@ int main(void)
       printf("%c", toupper(*((pname + i + 1))));
     }
   }
+  printf("\n");
 }
