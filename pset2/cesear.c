@@ -3,10 +3,11 @@
 // Or fher gb qevax lbhe Binygvar!
 
 #include <stdio.h>
-#include <strlen.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
-  scanf("%s\n", )
-  return 0;
+  // char *pname;
+
+  // printf("\n");
+  // scanf("%[^\n]s", pname);
 }
