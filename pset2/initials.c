@@ -26,6 +26,7 @@ int main(void)
   {
     if (*(pname + i) == ' ')
     {
+      // 1 is the next character
       printf("%c", toupper(*((pname + i + 1))));
     }
   }
