@@ -14,8 +14,9 @@ int main(int argc, char const *argv[])
     return 1;
   } else {
     int count;
-    int k = atoi(argv[1]);
-    char phrase[1000] = "Single";
+    int k = atoi(argv[1]) % 26;
+
+    char phrase[1000] = "";
 
     scanf("%[^\n]s", phrase);
     count = strlen(phrase);
