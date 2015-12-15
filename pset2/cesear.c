@@ -10,21 +10,41 @@
 int main(int argc, char const *argv[])
 {
   if (argc != 2) {
-    printf("%s\n", "Please add your cesear key");
+    printf("%s\n", "Whoops! Please add your cesear key.");
     return 1;
   } else {
     int count;
-    int k = atoi(argv[1]) % 26;
+    int cipher;
 
-    char phrase[1000] = "";
-
-    scanf("%[^\n]s", phrase);
-    count = strlen(phrase);
-    for (int i = 0; i < count; ++i)
+    cipher = atoi(argv[1]);
+    if (cipher == 0 || cipher < 0)
     {
-      printf("%c", phrase[i] + k);
+      printf("Try again: A cesear key must be a positive integer.\n");
     }
-    printf("\n");
-    return 0;
+    else
+    {
+      int k = cipher % 26;
+
+      // fix this someday when I understand life.
+      char phrase[1000] = "";
+
+      scanf("%[^\n]s", phrase);
+      count = strlen(phrase);
+      for (int i = 0; i < count; ++i)
+      {
+        if (isalpha(phrase[i]))
+        {
+          // upper
+          // lower
+          printf("%c", phrase[i] + k);
+        }
+        else
+        {
+          printf("%c", phrase[i]);
+        }
+      }
+      printf("\n");
+      return 0;
+    }
   }
 }
