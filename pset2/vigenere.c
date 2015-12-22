@@ -1,6 +1,6 @@
-// jharvard@appliance (~/Dropbox/pset2): ./caesar 13
-// Be sure to drink your Ovaltine!
-// Or fher gb qevax lbhe Binygvar!
+// jharvard@appliance (~/Dropbox/pset2): ./vigenere bacon
+// Meet me at the park at eleven am
+// Negh zf av huf pcfx bt gzrwep oz
 
 #include <stdio.h>
 #include <stdlib.h>
