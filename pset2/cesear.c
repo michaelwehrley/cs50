@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     int cipher = atoi(argv[1]);
     // fix this someday when I understand life.
     char phrase[1000] = "";
-    if (cipher > 0) {
+    if (cipher >= 0) {
       int k;
       int length;
 
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
         char c;
 
         if (isalpha(phrase[i])) {
-          int const ASCII_UPPER_Z = 90;
+          const int ASCII_UPPER_Z = 90;
           int const ASCII_LOWER_Z = 122;
           char coded_char;
 
@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
     }
     else
     {
-      printf("Try again: A cesear key must be a positive integer.\n");
+      printf("Try again: A cesear key must be a whole number.\n");
     }
   }
 }

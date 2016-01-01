@@ -7,63 +7,59 @@
 #include <string.h>
 #include <ctype.h>
 
-int const ALPHABET_LENGTH = 26;
-
-char decoded_char(char input, int upper_bound);
-
-int main(int argc, char const *argv[])
+int main(int const argc, char const *argv[])
 {
   int const NECESSARY_INPUTS = 2;
   if (argc != NECESSARY_INPUTS) {
-    printf("%s\n", "Whoops! Please add your cesear key.");
+    printf("%s\n", "Whoops! Please add your vigenere cipher word.");
   } else {
-    int cipher = atoi(argv[1]);
-    // fix this someday when I understand life.
+    printf("%s\n", argv[1]);
+    char const* cipher = argv[1];
+    int cipher_length = strlen(cipher);
+    // printf("%d\n", cipher_length);
+    // printf("%s\n", cipher);
+    // printf("%c ", *(cipher));
+    // printf("%p\n", &cipher[0]);
+    // printf("%c ", *(cipher + 1));
+    // printf("%p\n", &cipher[1]);
+    // printf("%c ", *(cipher + 2));
+    // printf("%p\n", &cipher[2]);
+    // printf("%c ", *(cipher + 3));
+    // printf("%p\n", &cipher[3]);
+    // printf("%c ", *(cipher + 4));
+    // printf("%p\n", &cipher[4]);
+
+    // char* phrase; ?
+    // char* phrase = ""; ?
     char phrase[1000] = "";
-    if (cipher > 0) {
-      int k;
-      int length;
-
-      k = cipher % ALPHABET_LENGTH;
-      scanf("%[^\n]s", phrase);
-      length = strlen(phrase);
-      for (int i = 0; i < length; ++i) {
-        char c;
-
-        if (isalpha(phrase[i])) {
-          int const ASCII_UPPER_Z = 90;
-          int const ASCII_LOWER_Z = 122;
-          char coded_char;
-
-          coded_char = phrase[i] + k;
-          if (isupper(phrase[i]))
-          {
-            c = decoded_char(coded_char, ASCII_UPPER_Z);
-          }
-          else
-          {
-            c = decoded_char(coded_char, ASCII_LOWER_Z);
-          }
-        }
-        else
-        {
-          c = phrase[i];
-        }
-        printf("%c", c);
-      }
-      printf("\n");
-    }
-    else
+    scanf("%[^\n]s", phrase);
+    int phrase_length = strlen(phrase);
+    for (int i = 0; i < phrase_length; ++i)
     {
-      printf("Try again: A cesear key must be a positive integer.\n");
+      int change;
+      char letter;
+      if (isupper(phrase[i])) {
+        // change = cipher[i % cipher_length] - '@';
+        change = cipher[i] - '@';
+        letter = phrase[i] + change;
+        if (isupper(letter)) {
+          printf("%c", letter);
+        } else {
+          printf("%c", letter - 26);
+        }
+      } else {
+        printf("%d", i % cipher_length);
+        // change = cipher[i % cipher_length] - '`';
+        change = cipher[i] - '`';
+        letter = phrase[i] + change;
+        if (islower(letter)) {
+          printf("%c", letter);
+        } else {
+          printf("%c", letter - 26);
+        }
+      }
     }
+    printf("\n");
   }
-}
-
-char decoded_char(char input, int upper_bound) {
-  if (input > upper_bound) {
-    return input - ALPHABET_LENGTH;
-  } else {
-    return input;
-  }
+  return 0;
 }
