@@ -8,56 +8,44 @@
 #include <ctype.h>
 
 int main(int const argc, char const *argv[])
+// find length of pointer value
 {
   int const NECESSARY_INPUTS = 2;
   if (argc != NECESSARY_INPUTS) {
     printf("%s\n", "Whoops! Please add your vigenere cipher word.");
   } else {
-    printf("%s\n", argv[1]);
-    char const* cipher = argv[1];
-    int cipher_length = strlen(cipher);
-    // printf("%d\n", cipher_length);
-    // printf("%s\n", cipher);
-    // printf("%c ", *(cipher));
-    // printf("%p\n", &cipher[0]);
-    // printf("%c ", *(cipher + 1));
-    // printf("%p\n", &cipher[1]);
-    // printf("%c ", *(cipher + 2));
-    // printf("%p\n", &cipher[2]);
-    // printf("%c ", *(cipher + 3));
-    // printf("%p\n", &cipher[3]);
-    // printf("%c ", *(cipher + 4));
-    // printf("%p\n", &cipher[4]);
+    // determine cipher word length
+    int cipher_length = 0;
+    int i = 0;
+    while (*(argv[1] + i)) {
+      cipher_length++;
+      i++;
+    }
 
-    // char* phrase; ?
-    // char* phrase = ""; ?
-    char phrase[1000] = "";
-    scanf("%[^\n]s", phrase);
-    int phrase_length = strlen(phrase);
-    for (int i = 0; i < phrase_length; ++i)
+    char message[] = "";
+    scanf("%[^\n]s", message);
+    int message_length = strlen(message);
+    printf("%d\n", message_length);
+
+    for (int i = 0; i < message_length; ++i)
     {
       int change;
+      int j;
       char letter;
-      if (isupper(phrase[i])) {
-        // change = cipher[i % cipher_length] - '@';
-        change = cipher[i] - '@';
-        letter = phrase[i] + change;
-        if (isupper(letter)) {
-          printf("%c", letter);
-        } else {
-          printf("%c", letter - 26);
-        }
+
+      if (i < cipher_length) {
+        j = i;
       } else {
-        printf("%d", i % cipher_length);
-        // change = cipher[i % cipher_length] - '`';
-        change = cipher[i] - '`';
-        letter = phrase[i] + change;
-        if (islower(letter)) {
-          printf("%c", letter);
-        } else {
-          printf("%c", letter - 26);
-        }
+        j = i % cipher_length;
       }
+
+      change = *(argv[1] + j) - 'a' + 1;
+      if (isupper(message[i])) {
+        letter = message[i] + change;
+      } else {
+        letter = message[i] + change;
+      }
+      printf("%c", letter);
     }
     printf("\n");
   }
