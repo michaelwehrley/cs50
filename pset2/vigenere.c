@@ -1,69 +1,68 @@
-// jharvard@appliance (~/Dropbox/pset2): ./vigenere bacon
+// cipher_positionharvard@appliance (~/Dropbox/pset2): ./vigenere bacon
 // Meet me at the park at eleven am
 // Negh zf av huf pcfx bt gzrwep oz
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-int const ALPHABET_LENGTH = 26;
+int calc_cipher_length(char const *ptr);
+int cipher_position(int position, int const cipher_length);
 
-char decoded_char(char input, int upper_bound);
-
-int main(int argc, char const *argv[])
-{
+int main(int const argc, char const *argv[]) {
   int const NECESSARY_INPUTS = 2;
+  int const ALPHABET_LENGTH = 'z' - 'a' + 1;
   if (argc != NECESSARY_INPUTS) {
-    printf("%s\n", "Whoops! Please add your cesear key.");
+    printf("%s\n", "Whoops! Please add your vigenere cipher word.");
   } else {
-    int cipher = atoi(argv[1]);
-    // fix this someday when I understand life.
-    char phrase[1000] = "";
-    if (cipher > 0) {
-      int k;
-      int length;
+    int cipher_length = calc_cipher_length(argv[1]);
 
-      k = cipher % ALPHABET_LENGTH;
-      scanf("%[^\n]s", phrase);
-      length = strlen(phrase);
-      for (int i = 0; i < length; ++i) {
-        char c;
-
-        if (isalpha(phrase[i])) {
-          int const ASCII_UPPER_Z = 90;
-          int const ASCII_LOWER_Z = 122;
-          char coded_char;
-
-          coded_char = phrase[i] + k;
-          if (isupper(phrase[i]))
-          {
-            c = decoded_char(coded_char, ASCII_UPPER_Z);
-          }
-          else
-          {
-            c = decoded_char(coded_char, ASCII_LOWER_Z);
-          }
+    // `char message[] = "";` conflicts with address of `cipher_length`
+    char message[1000] = "";
+    scanf("%[^\n]s", message);
+    int message_length = strlen(message);
+    int j = 0;
+    for (int i = 0; i < message_length; i++) {
+      int letter;
+      if (isupper(message[i])) {
+        int position = cipher_position(j, cipher_length);
+        int change = *(argv[1] + position) - 'a';
+        letter = message[i] + change;
+        if (letter > 'Z') {
+          letter = letter - ALPHABET_LENGTH;
         }
-        else
-        {
-          c = phrase[i];
+        j++;
+      } else if (islower(message[i])) {
+        int position = cipher_position(j, cipher_length);
+        int change = *(argv[1] + position) - 'a';
+        letter = message[i] + change;
+        if (letter > 'z') {
+          letter = letter - ALPHABET_LENGTH;
         }
-        printf("%c", c);
+        j++;
+      } else {
+        letter = message[i];
       }
-      printf("\n");
+      printf("%c", letter);
     }
-    else
-    {
-      printf("Try again: A cesear key must be a positive integer.\n");
-    }
+    printf("\n");
   }
+  return 0;
 }
 
-char decoded_char(char input, int upper_bound) {
-  if (input > upper_bound) {
-    return input - ALPHABET_LENGTH;
-  } else {
-    return input;
+int calc_cipher_length(char const *ptr) {
+  int length = 0;
+  while (*(ptr + length)) {
+    length++;
   }
+  return length;
 }
+
+int cipher_position(int position, int const cipher_length) {
+  if (position < cipher_length) {
+    position = position;
+  } else {
+    position = position % cipher_length;
+  }
+  return position;
+};
