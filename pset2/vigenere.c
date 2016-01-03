@@ -1,9 +1,8 @@
 // cipher_positionharvard@appliance (~/Dropbox/pset2): ./vigenere bacon
 // Meet me at the park at eleven am
 // Negh zf av huf pcfx bt gzrwep oz
-// Neg? zf av ?uf pc?x bt gzrwep oz
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
