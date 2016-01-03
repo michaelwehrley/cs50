@@ -8,10 +8,12 @@
 
 int calc_cipher_length(char const* ptr);
 int cipher_position(int position, int const cipher_length);
+int set_letter(char const* arg, int* position, char const message_letter, char const upper_bound);
+
+int const ALPHABET_LENGTH = 'z' - 'a' + 1;
 
 int main(int const argc, char const* argv[]) {
   int const NECESSARY_INPUTS = 2;
-  int const ALPHABET_LENGTH = 'z' - 'a' + 1;
   if (argc != NECESSARY_INPUTS) {
     printf("%s\n", "Whoops! Please add your vigenere cipher word.");
   } else {
@@ -26,19 +28,11 @@ int main(int const argc, char const* argv[]) {
       int letter;
       if (isupper(message[i])) {
         int position = cipher_position(p, cipher_length);
-        int change = *(argv[1] + position) - 'a';
-        letter = message[i] + change;
-        if (letter > 'Z') {
-          letter = letter - ALPHABET_LENGTH;
-        }
+        letter = set_letter(argv[1], &position, message[i], 'Z');
         p++;
       } else if (islower(message[i])) {
         int position = cipher_position(p, cipher_length);
-        int change = *(argv[1] + position) - 'a';
-        letter = message[i] + change;
-        if (letter > 'z') {
-          letter = letter - ALPHABET_LENGTH;
-        }
+        letter = set_letter(argv[1], &position, message[i], 'z');
         p++;
       } else {
         letter = message[i];
@@ -65,4 +59,13 @@ int cipher_position(int position, int const cipher_length) {
     position = position % cipher_length;
   }
   return position;
+};
+
+int set_letter(char const* arg, int* position, char const message_letter, char const upper_bound) {
+  int change = *(arg + *position) - 'a';
+  char letter = message_letter + change;
+  if (letter > upper_bound) {
+    letter = letter - ALPHABET_LENGTH;
+  }
+  return letter;
 };

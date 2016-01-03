@@ -9,12 +9,30 @@
 
 int main(int argc, char const *argv[])
 {
+  int n = 13;
+  printf("&n: %p\n", &n);
+  printf("*&n: %d\n", *&n);
+  printf("&*&n: %p\n", &*&n);
+  printf("*&*&n: %d\n", *&*&n);
+
+  int* ptn = &n;
+  printf("%i\n", *ptn);
+  printf("%p\n", &n);
+  printf("%i\n", *(ptn));
+  (*ptn)++;
+  printf("%i\n", *(ptn));
+  printf("%d\n", n);
+  printf("%i\n", *(ptn + 1));
+  int h = 8;
+  *(ptn + 1) = h;
+  printf("%i\n", *(ptn + 1));
+  printf("%p\n", &h);
 
   // char cipher;
   // argv[1] = &cipher;
   // printf("&cipher: %p\n", &cipher);
-  printf("*argv[1]: %c\n", *argv[1]);
-  printf("*argv[1] + 1: %c\n", *(argv[1] + 1));
+  // printf("*argv[1]: %c\n", *argv[1]);
+  // printf("*argv[1] + 1: %c\n", *(argv[1] + 1));
 
   // int char_to_i = 'j';
   // printf("int: %i, char: %c\n", (int) char_to_i, char_to_i);
