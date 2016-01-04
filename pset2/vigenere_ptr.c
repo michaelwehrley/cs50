@@ -77,5 +77,5 @@ int set_letter(
   if (*letter > upper_bound) {
     *letter = *letter - ALPHABET_LENGTH;
   }
-  return 0;
+  return;
 }

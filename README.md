@@ -1,6 +1,7 @@
 edX - [HarvardX: CS50x3 Introduction to Computer Science](https://courses.edx.org/courses/HarvardX/CS50x3/2015/)
 
 # Problem Sets
+
 ## Problem Set 1
 * [Mario](https://bitbucket.org/michaelwehrley/cs50/src/b4034f0d552b857d864790b1a404cfcd79667468/pset1/mario.c?at=master&fileviewer=file-view-default)
 
@@ -11,9 +12,11 @@ edX - [HarvardX: CS50x3 Introduction to Computer Science](https://courses.edx.or
 
 * [Ceaser Cipher](https://bitbucket.org/michaelwehrley/cs50/src/b4034f0d552b857d864790b1a404cfcd79667468/pset2/cesear.c?at=master&fileviewer=file-view-default)
 
-* [Vigenère Cipher](https://bitbucket.org/michaelwehrley/cs50/src/b4034f0d552b857d864790b1a404cfcd79667468/pset2/vigenere.c?at=master&fileviewer=file-view-default)
+* Vigenère Cipher
+  1. [Vigenère Cipher](https://bitbucket.org/michaelwehrley/cs50/src/b4034f0d552b857d864790b1a404cfcd79667468/pset2/vigenere.c?at=master&fileviewer=file-view-default)
+  1. [Vigenère Cipher (with more pointers)](https://bitbucket.org/michaelwehrley/cs50/src/4db7ad40df9da584a41dae473c76fc27bd535aff/pset2/vigenere_ptr.c?at=master&fileviewer=file-view-default)
 
-## Notes
+## Notes About Pointers
 http://cs50.stackexchange.com/questions/1083/array-initializer-must-be-an-initializer-list-or-string-literal
 http://stackoverflow.com/questions/12795850/string-literals-pointer-vs-char-array
 http://stackoverflow.com/questions/2036096/literal-string-initializer-for-a-character-array
