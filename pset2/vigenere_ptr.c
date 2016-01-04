@@ -8,7 +8,12 @@
 
 int calc_cipher_length(char const* ptr);
 int cipher_position(int position, int const cipher_length);
-int set_letter(char const* arg, int* position, char const message_letter, char const upper_bound);
+int set_letter(
+  char const* arg,
+  int* position,
+  char const message_letter,
+  char const upper_bound,
+  int* letter);
 
 int const ALPHABET_LENGTH = 'z' - 'a' + 1;
 
@@ -28,11 +33,11 @@ int main(int const argc, char const* argv[]) {
       int letter;
       if (isupper(message[i])) {
         int position = cipher_position(p, cipher_length);
-        letter = set_letter(argv[1], &position, message[i], 'Z');
+        set_letter(argv[1], &position, message[i], 'Z', &letter);
         p++;
       } else if (islower(message[i])) {
         int position = cipher_position(p, cipher_length);
-        letter = set_letter(argv[1], &position, message[i], 'z');
+        set_letter(argv[1], &position, message[i], 'z', &letter);
         p++;
       } else {
         letter = message[i];
@@ -59,13 +64,18 @@ int cipher_position(int position, int const cipher_length) {
     position = position % cipher_length;
   }
   return position;
-};
+}
 
-int set_letter(char const* arg, int* position, char const message_letter, char const upper_bound) {
-  int change = *(arg + *position) - 'a';
-  char letter = message_letter + change;
-  if (letter > upper_bound) {
-    letter = letter - ALPHABET_LENGTH;
+int set_letter(
+  char const* arg,
+  int* position,
+  char const message_letter,
+  char const upper_bound,
+  int* letter) {
+  int const change = *(arg + *position) - 'a';
+  *letter = message_letter + change;
+  if (*letter > upper_bound) {
+    *letter = *letter - ALPHABET_LENGTH;
   }
-  return letter;
-};
+  return 0;
+}
