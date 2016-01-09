@@ -1,0 +1,17 @@
+# 1 "code.c"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 325 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "code.c" 2
+# 1 "./pi.h" 1
+# 2 "code.c" 2
+
+
+int main(void) {
+  "Jan  8 2016";
+  double pi = 3.14159265358979323846;
+  double e = 2.71828182845904523536;
+  return 0;
+}
