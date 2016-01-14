@@ -32,7 +32,7 @@ Ltmp2:
 
 	.section	__TEXT,__cstring,cstring_literals
 L_.str:                                 ## @.str
-	.asciz	"Jan  8 2016"
+	.asciz	"Jan 10 2016"
 
 
 .subsections_via_symbols

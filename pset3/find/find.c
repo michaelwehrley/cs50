@@ -12,7 +12,7 @@
  * where needle is the value to find in a haystack of values
  */
        
-#include <cs50.h>
+#include "cs50.h"
 #include <stdio.h>
 #include <stdlib.h>
 
