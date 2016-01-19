@@ -14,10 +14,16 @@
 /**
  * Returns true if value is in array of n values, else false.
  */
-bool search(int value, int values[], int n)
-{
-    // TODO: implement a searching algorithm
-    return false;
+bool search(int value, int values[], int n) {
+  // TODO: implement a searching algorithm
+  int i = 0;
+  while(i < n) {
+    if (values[i] == value) {
+      return true;
+    }
+    i++;
+  }
+  return false;
 }
 
 /**
