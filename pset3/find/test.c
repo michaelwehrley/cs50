@@ -2,10 +2,11 @@
 
 int sort(int values[], int n);
 void show(int values[], int n);
+void swap(int* p_new_value, int* p_sorted_value);
 
 int main(int argc, char const *argv[])
 {
-  int myArray[2] = {2, 1};
+  int myArray[2] = { 2, 1 };
   sort(myArray, 2);
   return 0;
 }
@@ -15,19 +16,8 @@ int sort(int values[], int n) {
   show(values, n);
   int i = 0;
   while(i < n) {
-    int new_value = values[i];
-    // i - 1
     if (values[i] < values[0]) {
-      int temp = values[0];
-      int* p_new_value = &values[i];
-      int* p_sorted_value = &values[0];
-
-      printf("value_a: %i\n", *p_sorted_value);
-      printf("value_b: %i\n", *p_new_value);
-      *p_sorted_value = new_value;
-      *p_new_value = temp;
-      printf("value_a: %i\n", *p_sorted_value);
-      printf("value_b: %i\n", *p_new_value);
+      swap(&values[i], &values[0]);
     }
     i++;
   };
@@ -41,4 +31,15 @@ void show(int values[], int n) {
     printf("%i\n", values[i]);
     i++;
   }
+}
+
+void swap(int* p_new_value, int* p_sorted_value) {
+  int temp = *p_new_value;
+
+  printf("value_a: %i\n", *p_sorted_value);
+  printf("value_b: %i\n", *p_new_value);
+  *p_new_value = *p_sorted_value;
+  *p_sorted_value = temp;
+  printf("value_a: %i\n", *p_sorted_value);
+  printf("value_b: %i\n", *p_new_value);
 }
