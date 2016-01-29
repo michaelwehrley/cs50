@@ -196,9 +196,10 @@ void draw(void) {
  * If tile borders empty space, moves tile and returns true, else
  * returns false. 
  */
+
 bool move(int tile) {
   // TODO
-  int right = -1, left = -1, top = -1, bottom = -1;
+  int right, left, top, bottom;
   int coordinates[2];
   for (int x = 0; x < d; x++) {
     for (int y = 0; y < d; y++) {
@@ -209,28 +210,44 @@ bool move(int tile) {
     }
   }
 
-  // up tile
+  // top tile
   int _a = coordinates[0] - 1;
   if (_a >= 0 && _a < d) {
     top = board[_a][coordinates[1]];
-  }
-
-  // left tile
-  int _b = coordinates[1] - 1;
-  if (_b >= 0 && _b < d) {
-    left = board[coordinates[0]][_b];
+  } else {
+    top = -1;
   }
 
   // bottom tile
   int _c = coordinates[0] + 1;
   if (_c >= 0 && _c < d) {
     bottom = board[_c][coordinates[1]];
+    if (bottom == 0) {
+      int* p_current = &board[coordinates[0]][coordinates[1]];
+      int temp = *p_current;      
+      int* p_zero = &board[_c][coordinates[1]];
+
+      *p_zero = temp;
+      *p_current = 0;
+    }
+  } else {
+    bottom = -1;
+  }
+
+  // left tile
+  int _b = coordinates[1] - 1;
+  if (_b >= 0 && _b < d) {
+    left = board[coordinates[0]][_b];
+  } else {
+    left = -1;
   }
 
   // right tile
   int _d = coordinates[1] + 1;
   if (_d >= 0 && _d < d) {
     right = board[coordinates[0]][_d];
+  } else {
+    right = -1;
   }
 
   printf("top: %i\n", top);
@@ -238,7 +255,12 @@ bool move(int tile) {
   printf("left: %i\n", left);
   printf("right: %i\n", right);
 
-  return false;
+  if (top == 0 || bottom == 0 || left == 0 || right == 0) {
+    
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /**
