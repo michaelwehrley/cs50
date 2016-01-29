@@ -157,8 +157,7 @@ void greet(void)
  * Initializes the game's board with tiles numbered 1 through d*d - 1
  * (i.e., fills 2D array with values but does not actually print them).  
  */
-void init(void)
-{
+void init(void) {
   // TODO
   for (int i = 0; i < d; i++) {
     for (int j = 0; j < d; j++) {
@@ -176,20 +175,19 @@ void init(void)
 /**
  * Prints the board in its current state.
  */
-void draw(void)
-{
+void draw(void) {
   // TODO
   for (int i = 0; i < d; i++) {
     for (int j = 0; j < d; j++) {
       printf("%i", board[i][j]);
-        if (j < d - 1) {
-          if (board[i][j] < 10) {
-            printf(" |");
-          } else {
-            printf("|");
-          }
+      if (j < d - 1) {
+        if (board[i][j] < 10) {
+          printf(" |");
+        } else {
+          printf("|");
         }
       }
+    }
     printf("\n");
   }
 }
@@ -198,10 +196,49 @@ void draw(void)
  * If tile borders empty space, moves tile and returns true, else
  * returns false. 
  */
-bool move(int tile)
-{
-    // TODO
-    return false;
+bool move(int tile) {
+  // TODO
+  int right = -1, left = -1, top = -1, bottom = -1;
+  int coordinates[2];
+  for (int x = 0; x < d; x++) {
+    for (int y = 0; y < d; y++) {
+      if (board[x][y] == tile) {
+        coordinates[0] = x;
+        coordinates[1] = y;
+      }
+    }
+  }
+
+  // up tile
+  int _a = coordinates[0] - 1;
+  if (_a >= 0 && _a < d) {
+    top = board[_a][coordinates[1]];
+  }
+
+  // left tile
+  int _b = coordinates[1] - 1;
+  if (_b >= 0 && _b < d) {
+    left = board[coordinates[0]][_b];
+  }
+
+  // bottom tile
+  int _c = coordinates[0] + 1;
+  if (_c >= 0 && _c < d) {
+    bottom = board[_c][coordinates[1]];
+  }
+
+  // right tile
+  int _d = coordinates[1] + 1;
+  if (_d >= 0 && _d < d) {
+    right = board[coordinates[0]][_d];
+  }
+
+  printf("top: %i\n", top);
+  printf("bottom: %i\n", bottom);
+  printf("left: %i\n", left);
+  printf("right: %i\n", right);
+
+  return false;
 }
 
 /**
