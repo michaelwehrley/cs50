@@ -219,8 +219,8 @@ bool move(int tile) {
 
       *p_zero = temp;
       *p_current = 0;
+      return true;
     }
-    return true;
   }
 
   // bottom tile
@@ -233,8 +233,8 @@ bool move(int tile) {
 
       *p_zero = temp;
       *p_current = 0;
+      return true;
     }
-    return true;
   }
 
   // left tile
@@ -247,8 +247,8 @@ bool move(int tile) {
 
       *p_zero = temp;
       *p_current = 0;
+      return true;
     }
-    return true;
   }
 
   // right tile
@@ -261,8 +261,8 @@ bool move(int tile) {
 
       *p_zero = temp;
       *p_current = 0;
+      return true;
     }
-    return true;
   }
 
   return false;
