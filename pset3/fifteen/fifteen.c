@@ -196,10 +196,13 @@ void draw(void) {
  * If tile borders empty space, moves tile and returns true, else
  * returns false. 
  */
+bool horizotonal_swap(int coordinates[], int _e, int* p_current, int temp);
+bool vertical_swap(int coordinates[], int _e, int* p_current, int temp);
 
 bool move(int tile) {
   // TODO
   int coordinates[2];
+
   for (int x = 0; x < d; x++) {
     for (int y = 0; y < d; y++) {
       if (board[x][y] == tile) {
@@ -209,62 +212,55 @@ bool move(int tile) {
     }
   }
 
-  // top tile
-  int _a = coordinates[0] - 1;
-  if (_a >= 0 && _a < d) {
-    if (board[_a][coordinates[1]] == 0) {
-      int* p_current = &board[coordinates[0]][coordinates[1]];
-      int temp = *p_current;
-      int* p_zero = &board[_a][coordinates[1]];
+  int* p_current = &board[coordinates[0]][coordinates[1]];
+  int temp = *p_current;
 
-      *p_zero = temp;
-      *p_current = 0;
-      return true;
-    }
+  // top tile
+  if (vertical_swap(coordinates, coordinates[0] - 1, p_current, temp)) {
+    return true;
   }
 
   // bottom tile
-  int _c = coordinates[0] + 1;
-  if (_c >= 0 && _c < d) {
-    if (board[_c][coordinates[1]] == 0) {
-      int* p_current = &board[coordinates[0]][coordinates[1]];
-      int temp = *p_current;
-      int* p_zero = &board[_c][coordinates[1]];
-
-      *p_zero = temp;
-      *p_current = 0;
-      return true;
-    }
+  if (vertical_swap(coordinates, coordinates[0] + 1, p_current, temp)) {
+    return true;
   }
 
   // left tile
-  int _b = coordinates[1] - 1;
-  if (_b >= 0 && _b < d) {
-    if (board[coordinates[0]][_b] == 0) {
-      int* p_current = &board[coordinates[0]][coordinates[1]];
-      int temp = *p_current;
-      int* p_zero = &board[coordinates[0]][_b];
-
-      *p_zero = temp;
-      *p_current = 0;
-      return true;
-    }
+  if (horizotonal_swap(coordinates, coordinates[1] - 1, p_current, temp)) {
+    return true;
   }
 
   // right tile
-  int _d = coordinates[1] + 1;
-  if (_d >= 0 && _d < d) {
-    if (board[coordinates[0]][_d] == 0) {
-      int* p_current = &board[coordinates[0]][coordinates[1]];
-      int temp = *p_current;
-      int* p_zero = &board[coordinates[0]][_d];
+  if (horizotonal_swap(coordinates, coordinates[1] + 1, p_current, temp)) {
+    return true;
+  }
+
+  return false;
+}
+
+bool horizotonal_swap(int coordinates[], int _e, int* p_current, int temp) {
+  if (_e >= 0 && _e < d) {
+    if (board[coordinates[0]][_e] == 0) {
+      int* p_zero = &board[coordinates[0]][_e];
 
       *p_zero = temp;
       *p_current = 0;
       return true;
     }
   }
+  return false;
+}
 
+bool vertical_swap(int coordinates[], int _e, int* p_current, int temp) {
+  if (_e >= 0 && _e < d) {
+    if (board[_e][coordinates[1]] == 0) {
+      int* p_zero = &board[_e][coordinates[1]];
+
+      *p_zero = temp;
+      *p_current = 0;
+      return true;
+    }
+  }
   return false;
 }
 
