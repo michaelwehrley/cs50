@@ -160,16 +160,17 @@ void greet(void)
 void init(void)
 {
   // TODO
-  int gameboard[d][d];  
-  int i = 0;
-  while (i < d) {
-    int j = 0;
-    while (j < d) {
-      gameboard[i][j] = (i * d) + j + 1;
-      j++;
+  for (int i = 0; i < d; i++) {
+    for (int j = 0; j < d; j++) {
+      int value = d*(d-i) - (j) - 1;
+      if (value == 2) {
+        value = 1;
+      } else if (value == 1) {
+        value = 2;
+      }
+      board[i][j] = value;
     }
-    i++;
-  }  
+  }
 }
 
 /**
@@ -177,7 +178,7 @@ void init(void)
  */
 void draw(void)
 {
-    // TODO
+  // TODO
 }
 
 /**
