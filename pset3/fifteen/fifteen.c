@@ -159,7 +159,17 @@ void greet(void)
  */
 void init(void)
 {
-    // TODO
+  // TODO
+  int gameboard[d][d];  
+  int i = 0;
+  while (i < d) {
+    int j = 0;
+    while (j < d) {
+      gameboard[i][j] = (i * d) + j + 1;
+      j++;
+    }
+    i++;
+  }  
 }
 
 /**
