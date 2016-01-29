@@ -199,7 +199,6 @@ void draw(void) {
 
 bool move(int tile) {
   // TODO
-  int right, left, top, bottom;
   int coordinates[2];
   for (int x = 0; x < d; x++) {
     for (int y = 0; y < d; y++) {
@@ -213,54 +212,60 @@ bool move(int tile) {
   // top tile
   int _a = coordinates[0] - 1;
   if (_a >= 0 && _a < d) {
-    top = board[_a][coordinates[1]];
-  } else {
-    top = -1;
+    if (board[_a][coordinates[1]] == 0) {
+      int* p_current = &board[coordinates[0]][coordinates[1]];
+      int temp = *p_current;
+      int* p_zero = &board[_a][coordinates[1]];
+
+      *p_zero = temp;
+      *p_current = 0;
+    }
+    return true;
   }
 
   // bottom tile
   int _c = coordinates[0] + 1;
   if (_c >= 0 && _c < d) {
-    bottom = board[_c][coordinates[1]];
-    if (bottom == 0) {
+    if (board[_c][coordinates[1]] == 0) {
       int* p_current = &board[coordinates[0]][coordinates[1]];
-      int temp = *p_current;      
+      int temp = *p_current;
       int* p_zero = &board[_c][coordinates[1]];
 
       *p_zero = temp;
       *p_current = 0;
     }
-  } else {
-    bottom = -1;
+    return true;
   }
 
   // left tile
   int _b = coordinates[1] - 1;
   if (_b >= 0 && _b < d) {
-    left = board[coordinates[0]][_b];
-  } else {
-    left = -1;
+    if (board[coordinates[0]][_b] == 0) {
+      int* p_current = &board[coordinates[0]][coordinates[1]];
+      int temp = *p_current;
+      int* p_zero = &board[coordinates[0]][_b];
+
+      *p_zero = temp;
+      *p_current = 0;
+    }
+    return true;
   }
 
   // right tile
   int _d = coordinates[1] + 1;
   if (_d >= 0 && _d < d) {
-    right = board[coordinates[0]][_d];
-  } else {
-    right = -1;
-  }
+    if (board[coordinates[0]][_d] == 0) {
+      int* p_current = &board[coordinates[0]][coordinates[1]];
+      int temp = *p_current;
+      int* p_zero = &board[coordinates[0]][_d];
 
-  printf("top: %i\n", top);
-  printf("bottom: %i\n", bottom);
-  printf("left: %i\n", left);
-  printf("right: %i\n", right);
-
-  if (top == 0 || bottom == 0 || left == 0 || right == 0) {
-    
+      *p_zero = temp;
+      *p_current = 0;
+    }
     return true;
-  } else {
-    return false;
   }
+
+  return false;
 }
 
 /**
