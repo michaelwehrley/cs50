@@ -7,7 +7,6 @@
  * Helper functions for Problem Set 3.
  */
 
-#include <stdio.h>
 #include <math.h>
 
 #include "cs50.h"
@@ -16,58 +15,47 @@
 
 void bubble_sort(int values[], int n);
 void swap(int* p_new_value, int* p_sorted_value);
-
-void show(int values[], int n) {
-  printf("showing values: [");
-  int i = 0;
-  while(i < n) {
-    printf("%i, ", values[i]);
-    i++;
-  }
-  printf("]\n");
-}
+bool divide_and_conquer(int n, int value, int values[], int* p_lower_position, int* p_upper_position);
 
 /**
  * Returns true if value is in array of n values, else false.
  */
 
-bool divide_and_conquer(int value, int n, int values[]) {
-  show(values, n);
-  int half = n / 2;
-  if (half == 0) {
+bool search(int value, int values[], int n) {
+  // TODO: implement a binary searching algorithm
+  int lower_position = 0;
+  int* p_lower_position = &lower_position;
+  int upper_position = n - 1;
+  int* p_upper_position = &upper_position;
+  return divide_and_conquer(n, value, values, p_lower_position, p_upper_position);
+}
+
+bool divide_and_conquer(int n, int value, int values[], int* p_lower_position, int* p_upper_position) {
+  int delta = (*p_upper_position - *p_lower_position) / 2;
+  int half = *p_upper_position - delta;
+  if (value == values[half]) {
+    return true;
+  } else if (half == 1 || half == (n - 1)) {
     return false;
   } else if (value < values[half]) {
-    printf("%c\n", 'd');
-    printf("%i\n", half);
-    return divide_and_conquer(value, half, values);
-  } else if (value == values[half]) {
-    return true;
-  } else {
-    printf("%c\n", 'u');
-    int quarter = half / 2;
-    int middle = half + quarter;
-    printf("%i\n", middle);
-    return divide_and_conquer(value, middle, values);
+    *p_upper_position = half;
+  } else if (value > values[half]) {
+    *p_lower_position = half;
   }
+  return divide_and_conquer(n, value, values, p_lower_position, p_upper_position);
 }
 
-bool search(int value, int values[], int n) {
-  // TODO: implement a searching algorithm
-  sort(values, n);
-  return divide_and_conquer(value, n, values);
+bool linear_search(int value, int values[], int n) {
+  // TODO: implement a linear searching algorithm
+  int i = 0;
+  while(i < n) {
+    if (values[i] == value) {
+      return true;
+    }
+    i++;
+  }
+  return false;
 }
-
-// bool search(int value, int values[], int n) {
-//   // TODO: implement a searching algorithm
-//   int i = 0;
-//   while(i < n) {
-//     if (values[i] == value) {
-//       return true;
-//     }
-//     i++;
-//   }
-//   return false;
-// }
 
 /**
  * Sorts array of n values.
