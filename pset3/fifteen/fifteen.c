@@ -179,6 +179,19 @@ void init(void)
 void draw(void)
 {
   // TODO
+  for (int i = 0; i < d; i++) {
+    for (int j = 0; j < d; j++) {
+      printf("%i", board[i][j]);
+        if (j < d - 1) {
+          if (board[i][j] < 10) {
+            printf(" |");
+          } else {
+            printf("|");
+          }
+        }
+      }
+    printf("\n");
+  }
 }
 
 /**
