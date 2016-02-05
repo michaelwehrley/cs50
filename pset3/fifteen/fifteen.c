@@ -162,10 +162,12 @@ void init(void) {
   for (int i = 0; i < d; i++) {
     for (int j = 0; j < d; j++) {
       int value = d*(d-i) - (j) - 1;
-      if (value == 2) {
-        value = 1;
-      } else if (value == 1) {
-        value = 2;
+      if (d % 2 == 0) {
+        if (value == 2) {
+          value = 1;
+        } else if (value == 1) {
+          value = 2;
+        }
       }
       board[i][j] = value;
     }
@@ -179,9 +181,14 @@ void draw(void) {
   // TODO
   for (int i = 0; i < d; i++) {
     for (int j = 0; j < d; j++) {
-      printf("%i", board[i][j]);
+      int tile = board[i][j];
+      if (tile == 0) {
+        printf("%c", '_');
+      } else {
+       printf("%i", tile); 
+      }
       if (j < d - 1) {
-        if (board[i][j] < 10) {
+        if (tile < 10) {
           printf(" |");
         } else {
           printf("|");
@@ -214,10 +221,6 @@ bool move(int tile) {
 
   int* p_current = &board[coordinates[0]][coordinates[1]];
   int temp = *p_current;
-
-  if (tile < 0 || tile > d*d) {
-    return false;
-  }
 
   // top tile
   if (vertical_swap(coordinates, coordinates[0] - 1, p_current, temp)) {
@@ -281,7 +284,6 @@ bool won(void) {
       if (d - 1 == j && d - 1 == i) {
         return true;
       } else if (current > previous) {
-        printf("%i\n", current);
         previous = current;
       } else {
         return false;
