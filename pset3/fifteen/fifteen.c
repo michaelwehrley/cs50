@@ -157,35 +157,138 @@ void greet(void)
  * Initializes the game's board with tiles numbered 1 through d*d - 1
  * (i.e., fills 2D array with values but does not actually print them).  
  */
-void init(void)
-{
-    // TODO
+void init(void) {
+  // TODO
+  for (int i = 0; i < d; i++) {
+    for (int j = 0; j < d; j++) {
+      int value = d*(d-i) - (j) - 1;
+      if (d % 2 == 0) {
+        if (value == 2) {
+          value = 1;
+        } else if (value == 1) {
+          value = 2;
+        }
+      }
+      board[i][j] = value;
+    }
+  }
 }
 
 /**
  * Prints the board in its current state.
  */
-void draw(void)
-{
-    // TODO
+void draw(void) {
+  // TODO
+  for (int i = 0; i < d; i++) {
+    for (int j = 0; j < d; j++) {
+      int tile = board[i][j];
+      if (tile == 0) {
+        printf("%c", '_');
+      } else {
+       printf("%i", tile); 
+      }
+      if (j < d - 1) {
+        if (tile < 10) {
+          printf(" |");
+        } else {
+          printf("|");
+        }
+      }
+    }
+    printf("\n");
+  }
 }
 
 /**
  * If tile borders empty space, moves tile and returns true, else
  * returns false. 
  */
-bool move(int tile)
-{
-    // TODO
-    return false;
+bool horizotonal_swap(int coordinates[], int _e, int* p_current, int temp);
+bool vertical_swap(int coordinates[], int _e, int* p_current, int temp);
+
+bool move(int tile) {
+  // TODO
+  int coordinates[2];
+
+  for (int x = 0; x < d; x++) {
+    for (int y = 0; y < d; y++) {
+      if (board[x][y] == tile) {
+        coordinates[0] = x;
+        coordinates[1] = y;
+      }
+    }
+  }
+
+  int* p_current = &board[coordinates[0]][coordinates[1]];
+  int temp = *p_current;
+
+  // top tile
+  if (vertical_swap(coordinates, coordinates[0] - 1, p_current, temp)) {
+    return true;
+  }
+
+  // bottom tile
+  if (vertical_swap(coordinates, coordinates[0] + 1, p_current, temp)) {
+    return true;
+  }
+
+  // left tile
+  if (horizotonal_swap(coordinates, coordinates[1] - 1, p_current, temp)) {
+    return true;
+  }
+
+  // right tile
+  if (horizotonal_swap(coordinates, coordinates[1] + 1, p_current, temp)) {
+    return true;
+  }
+
+  return false;
+}
+
+bool horizotonal_swap(int coordinates[], int _e, int* p_current, int temp) {
+  if (_e >= 0 && _e < d) {
+    if (board[coordinates[0]][_e] == 0) {
+      int* p_zero = &board[coordinates[0]][_e];
+
+      *p_zero = temp;
+      *p_current = 0;
+      return true;
+    }
+  }
+  return false;
+}
+
+bool vertical_swap(int coordinates[], int _e, int* p_current, int temp) {
+  if (_e >= 0 && _e < d) {
+    if (board[_e][coordinates[1]] == 0) {
+      int* p_zero = &board[_e][coordinates[1]];
+
+      *p_zero = temp;
+      *p_current = 0;
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
  * Returns true if game is won (i.e., board is in winning configuration), 
  * else false.
  */
-bool won(void)
-{
-    // TODO
-    return false;
+bool won(void) {
+  // TODO
+  int previous = 0;
+  for (int i = 0; i < d; i++) {
+    for (int j = 0; j < d; j++) {
+      int current = board[i][j];
+      if (d - 1 == j && d - 1 == i) {
+        return true;
+      } else if (current > previous) {
+        previous = current;
+      } else {
+        return false;
+      }
+    }
+  }
+  return true;
 }
