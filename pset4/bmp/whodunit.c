@@ -68,7 +68,6 @@ int main(int argc, char* argv[])
 
     // determine padding for scanlines
     int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-    printf("padding: %d\n", padding);
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
@@ -82,6 +81,17 @@ int main(int argc, char* argv[])
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
+            // turns all reds into whites
+            if ((triple.rgbtBlue == 0x00) && (triple.rgbtGreen == 0x00) && (triple.rgbtRed == 0xff)) {
+              triple.rgbtBlue = 0xff;
+              triple.rgbtGreen = 0xff;
+              triple.rgbtRed = 0xff;
+            } else if (triple.rgbtRed != 0xff) {
+              int average = ((triple.rgbtBlue + triple.rgbtGreen +  triple.rgbtRed) / 3);
+              triple.rgbtBlue = average;
+              triple.rgbtGreen = average;
+              triple.rgbtRed = average;
+            }
             // write RGB triple to outfile
             fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
         }
