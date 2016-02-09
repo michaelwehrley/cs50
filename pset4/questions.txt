@@ -1,19 +1,74 @@
-0.  TODO
-1.  TODO
-2.  TODO
-3.  TODO
-4.  TODO
-5.  TODO
-6.  TODO
-7.  TODO
-8.  TODO
-9.  TODO
-10. TODO
-11. TODO
-12. TODO
-13. TODO
-14. TODO
-15. TODO
-16. TODO
-17. TODO
+0. How many different colors does each format support?
+  GIF:
+    - 8-bit color == 256 colors
+    - 256 colors or less
+    - lossless
+  BMP:
+    - BMP actually supports 1-, 4-, 8-, 16-, 24-, and 32-bit color
+    - 24-bit color == 16,777,216 colors
+    - lossless
+    - very little compression
+  JPEG:
+    - up to 24-bit color (possibly more?)
+    - better for photos where contrast isn't as important (blends and gradients)
+  PNG:
+    - 48-bit color == 281,474,976,710,656 colors
+    - lossless
+    - moderate compression, lossless, alpha support
+    - better for higher contrast
+    - compress images losslessly (without loss of pixels)
+
+1. Which of the formats supports animation? 
+  Animations: GIF (although there is a Motion JPEG format & a protocol for animated PNG files)
+2. 
+  Lossy:
+    - a technigue used to reduce data size for storage that gives inexact approximations (or partial data discarding) to represent the content.
+  Lossless: allows the original data to be perfectly reconstructed from the compressed data.
+
+3.  Which of these formats is lossy-compressed?
+  - PNG
+  - GIF
+  - BMP
+4.  * What happens, technically speaking, when a file is deleted on a FAT file system?
+  -
+5.  * What can someone like you do to ensure (with high probability) that files you delete cannot be recovered?
+  -
+6.  * What’s stdint.h?
+  - This is a file header that... 
+7.  * What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+  -
+8.  How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively?
+  - BYTE: 1 byte
+  - DWORD: 4 bytes
+  - LONG: 4 bytes
+  - WORD: 2 bytes
+9. What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? (Leading bytes used to identify file formats (with high probability) are generally called "magic numbers.)"
+  - ascii digits: BM
+  - hex: 424d (0x424D)
+
+10. What’s the difference between bfSize and biSize?
+  - bfSize: the size of the entire bmp file
+  - biSize: The number of bytes required by the structure (i.e., BITMAPFILEHEADER or BITMAPINFOHEADER).
+
+11. What does it mean if biHeight is negative?
+ - The height of the bitmap, in pixels. If biHeight is positive, the bitmap is a bottom-up DIB and its origin is the lower-left corner. If biHeight is negative, the bitmap is a top-down DIB and its origin is the upper-left corner. If biHeight is negative, indicating a top-down DIB, biCompression must be either BI_RGB or BI_BITFIELDS. Top-down DIBs cannot be compresse.
+
+12. What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)?
+  - biBitCount
+
+13. Why might fopen return NULL in copy.c:37?
+  - if you don't have permission to open
+
+14. Why is the third argument to fread always 1 in our code?
+  - parameter is `size_t nitems`, so read 1 byte at a time
+
+15. What value does copy.c:70 assign padding if bi.biWidth is 3?
+  - any multiple of 3 will result in a padding of 3 (through trial and error)
+
+16. What does fseek do?
+  -
+
+17. What is SEEK_CUR?
+
+
 18. TODO
