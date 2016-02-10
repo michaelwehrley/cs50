@@ -14,7 +14,7 @@
 
 int main(int argc, char* argv[])
 {
-    char* factor = argv[1];
+    int factor = atoi(argv[1]);
     // remember filenames
     char* infile = argv[2];
     char* outfile = argv[3];
@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
 
     // open output file
     FILE* outptr = fopen(outfile, "w");
+
     if (outptr == NULL)
     {
         fclose(inptr);
@@ -36,13 +37,25 @@ int main(int argc, char* argv[])
         return 3;
     }
 
-    // read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
     fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
 
-    // read infile's BITMAPINFOHEADER
     BITMAPINFOHEADER bi;
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
+
+    // calculate zoomed size
+    bi.biWidth = bi.biWidth * factor;
+
+    // determine padding for scanlines
+    int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+
+    // absolute values b/c top/down
+    bi.biHeight = abs(bi.biHeight) * factor;
+    bi.biSizeImage = bi.biWidth * bi.biHeight + padding * bi.biHeight;
+
+    // We have a new file size here now - dah!
+    // This is how you calculate bfSize bitfilesize
+    bf.bfSize = bi.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
 
     // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
     if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
@@ -59,9 +72,6 @@ int main(int argc, char* argv[])
 
     // write outfile's BITMAPINFOHEADER
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
-
-    // determine padding for scanlines
-    int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
