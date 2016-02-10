@@ -44,12 +44,14 @@ int main(int argc, char* argv[])
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
 
     // calculate zoomed size
+    int old_biWidth = bi.biWidth;
     bi.biWidth = bi.biWidth * factor;
 
     // determine padding for scanlines
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
     // absolute values b/c top/down
+    int old_biHeight = bi.biHeight;
     bi.biHeight = abs(bi.biHeight) * factor;
     bi.biSizeImage = bi.biWidth * bi.biHeight + padding * bi.biHeight;
 
@@ -73,29 +75,36 @@ int main(int argc, char* argv[])
     // write outfile's BITMAPINFOHEADER
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
+    // determine padding for scanlines
+    int old_padding =  (4 - (old_biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+
     // iterate over infile's scanlines
-    for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    for (int i = 0, biHeight = abs(old_biHeight); i < biHeight; i++)
     {
-        // iterate over pixels in scanline
-        for (int j = 0; j < bi.biWidth; j++)
-        {
-            // temporary storage
-            RGBTRIPLE triple;
+        for (int factor_a = 0; factor_a < factor; factor_a++) {
+            // iterate over pixels in scanline
+            for (int j = 0; j < old_biWidth; j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
 
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-            // write RGB triple to outfile
-            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-        }
+                // write RGB triple to outfile
+                for (int factor_b = 0; factor_b < factor; factor_b++) {
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                }
+            }
 
-        // skip over padding, if any
-        fseek(inptr, padding, SEEK_CUR);
+            // skip over padding, if any
+            fseek(inptr, old_padding, SEEK_CUR);
 
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
-        {
-            fputc(0x00, outptr);
+            // then add it back (to demonstrate how)
+            for (int k = 0; k < padding; k++)
+            {
+                fputc(0x00, outptr);
+            }
         }
     }
 
