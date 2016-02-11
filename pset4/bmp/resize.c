@@ -92,6 +92,15 @@ int main(int argc, char* argv[])
 
             // write RGB triple to outfile
             for (int f = 0; f < factor; f++) {
+                printf("i: %d", i);
+                printf(" & j: %d\n", j);
+                if (i == 0 && j == 0) {
+                    printf("position %d\n", j);
+                  triple.rgbtBlue = 0xff;
+                  triple.rgbtGreen = 0x00;
+                  triple.rgbtRed = 0xff;
+                }
+
                 fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
             }
         }
