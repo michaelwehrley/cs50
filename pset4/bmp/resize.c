@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
     // absolute values b/c top/down
     int old_biHeight = bi.biHeight;
-    bi.biHeight = abs(bi.biHeight) * factor;
+    // bi.biHeight = abs(bi.biHeight) * factor;
     bi.biSizeImage = bi.biWidth * bi.biHeight + padding * bi.biHeight;
 
     // We have a new file size here now - dah!
@@ -81,30 +81,28 @@ int main(int argc, char* argv[])
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(old_biHeight); i < biHeight; i++)
     {
-        for (int factor_a = 0; factor_a < factor; factor_a++) {
-            // iterate over pixels in scanline
-            for (int j = 0; j < old_biWidth; j++)
-            {
-                // temporary storage
-                RGBTRIPLE triple;
+        // iterate over pixels in scanline
+        for (int j = 0; j < old_biWidth; j++)
+        {
+            // temporary storage
+            RGBTRIPLE triple;
 
-                // read RGB triple from infile
-                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            // read RGB triple from infile
+            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-                // write RGB triple to outfile
-                for (int factor_b = 0; factor_b < factor; factor_b++) {
-                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-                }
+            // write RGB triple to outfile
+            for (int f = 0; f < factor; f++) {
+                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
             }
+        }
 
-            // skip over padding, if any
-            fseek(inptr, old_padding, SEEK_CUR);
+        // skip over padding, if any
+        fseek(inptr, old_padding, SEEK_CUR);
 
-            // then add it back (to demonstrate how)
-            for (int k = 0; k < padding; k++)
-            {
-                fputc(0x00, outptr);
-            }
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding; k++)
+        {
+            fputc(0x00, outptr);
         }
     }
 
