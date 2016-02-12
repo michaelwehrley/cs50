@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
     // calculate zoomed size
     int old_biWidth = bi.biWidth;
-    bi.biWidth = bi.biWidth * factor;
+    bi.biWidth = abs(bi.biWidth) * factor;
 
     // determine padding for scanlines
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(old_biHeight); i < biHeight; i++)
     {
-        for (int f = 0; f < factor; f++) {
+        for (int f = 1; f <= factor; f++) {
             // iterate over pixels in scanline
             for (int j = 0; j < old_biWidth; j++)
             {
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
                 fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
                 // write RGB triple to outfile
-                for (int f = 0; f < factor; f++) {
+                for (int ff = 0; ff < factor; ff++) {
                     fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
                 }
             }
@@ -103,15 +103,12 @@ int main(int argc, char* argv[])
                 fputc(0x00, outptr);
             }
 
-            if (f == (factor - 1)) {
-                fseek(inptr, old_padding, SEEK_CUR);
-            } else {
+            if (f != factor) {
                 fseek(inptr, sizeof(RGBTRIPLE) * (old_biWidth) * -1, SEEK_CUR);
             }
         }
+        fseek(inptr, old_padding, SEEK_CUR);
     }
-
-
 
     // close infile
     fclose(inptr);
