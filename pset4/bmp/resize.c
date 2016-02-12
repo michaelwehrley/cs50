@@ -81,55 +81,34 @@ int main(int argc, char* argv[])
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(old_biHeight); i < biHeight; i++)
     {
-        int iterations = 0;
-        // iterate over pixels in scanline
-        for (int j = 0; j < old_biWidth; j++)
-        {
-            iterations++;
-            // temporary storage
-            RGBTRIPLE triple;
+        for (int f = 0; f < factor; f++) {
+            // iterate over pixels in scanline
+            for (int j = 0; j < old_biWidth; j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
 
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-            // write RGB triple to outfile
-            for (int f = 0; f < factor; f++) {
-                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                // write RGB triple to outfile
+                for (int f = 0; f < factor; f++) {
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                }
+            }
+
+            // then add it back (to demonstrate how)
+            for (int k = 0; k < padding; k++)
+            {
+                fputc(0x00, outptr);
+            }
+
+            if (f == (factor - 1)) {
+                fseek(inptr, old_padding, SEEK_CUR);
+            } else {
+                fseek(inptr, sizeof(RGBTRIPLE) * (old_biWidth) * -1, SEEK_CUR);
             }
         }
-
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
-        {
-            fputc(0x00, outptr);
-        }
-
-        // .....
-        fseek(inptr, sizeof(RGBTRIPLE) * iterations * -1, SEEK_CUR);
-
-        for (int j = 0; j < old_biWidth; j++)
-        {
-            // iterations++;
-            // temporary storage
-            RGBTRIPLE triple;
-
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
-
-            // write RGB triple to outfile
-            for (int f = 0; f < factor; f++) {
-                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-            }
-        }
-
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
-        {
-            fputc(0x00, outptr);
-        }
-
-        // skip over padding, if any
-        fseek(inptr, old_padding, SEEK_CUR);
     }
 
 
