@@ -19,6 +19,7 @@ const int PNG_BLOCK = 512;
 int main(int argc, char* argv[]) {
   // Open memory card file:
   FILE* inptr = fopen("card.raw", "r");
+  // FILE* inptr = fopen("card_copy.raw", "r");
   if (inptr == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
@@ -27,7 +28,7 @@ int main(int argc, char* argv[]) {
   char title[8]; // string literal
   int count = 0;
   sprintf(title, "00%d.jpg", count);
-  FILE* outptr = fopen(title, "a");
+  FILE* outptr = fopen(title, "w");
   if (outptr == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
@@ -39,9 +40,10 @@ int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
   BYTE block[PNG_BLOCK];
   if (fread(&block, sizeof(BYTE), PNG_BLOCK, inptr) == PNG_BLOCK) {
     if (is_png_header(block)) {
+      // fclose(outptr);
       sprintf(title, "00%d.jpg", count);
       // Open a new jpg
-      FILE* outptr = fopen(title, "a");
+      FILE* outptr = fopen(title, "w");
       if (outptr == NULL) {
         printf("something went wrong and file could not be appended");
         return 1;
@@ -50,11 +52,9 @@ int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
         count++;
         return build_png(inptr, title, count, outptr);
       }
-    } else if (count != 0) {
+    } else {
       sprintf(title, "00%d.jpg", count);
       fwrite(block, sizeof(block), 1, outptr);
-      return build_png(inptr, title, count, outptr);
-    } else {
       return build_png(inptr, title, count, outptr);
     }
   } else {
