@@ -25,34 +25,33 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  char title[8]; // string literal
+  char title[9]; // FIX COUNTING - string literal
   int count = 0;
   sprintf(title, "00%d.jpg", count);
   FILE* outptr = fopen(title, "w");
   if (outptr == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
+  } else {
+    build_png(inptr, title, count, outptr);
   }
-  return build_png(inptr, title, count, outptr);
 }
 
 int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
   if (fread(&block, sizeof(BYTE), PNG_BLOCK, inptr) == PNG_BLOCK) {
+    sprintf(title, "00%d.jpg", count);
     if (is_png_header(block)) {
-      // fclose(outptr);
-      sprintf(title, "00%d.jpg", count);
       // Open a new jpg
       FILE* outptr = fopen(title, "w");
       if (outptr == NULL) {
         printf("something went wrong and file could not be appended");
         return 1;
-      } else {
-        fwrite(block, sizeof(block), 1, outptr);
-        count++;
-        return build_png(inptr, title, count, outptr);
       }
+      
+      fwrite(block, sizeof(block), 1, outptr);
+      count++;
+      return build_png(inptr, title, count, outptr);
     } else {
-      sprintf(title, "00%d.jpg", count);
       fwrite(block, sizeof(block), 1, outptr);
       return build_png(inptr, title, count, outptr);
     }
