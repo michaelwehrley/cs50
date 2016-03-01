@@ -32,15 +32,19 @@ int main(int argc, char* argv[]) {
   if (outptr == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
-  } else {
-    build_png(inptr, title, count, outptr);
   }
+
+  build_png(inptr, title, count, outptr);
+  fclose(inptr);
+  fclose(outptr);
+  return 0;
 }
 
 int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
   if (fread(&block, sizeof(BYTE), PNG_BLOCK, inptr) == PNG_BLOCK) {
     sprintf(title, "00%d.jpg", count);
     if (is_png_header(block)) {
+      fclose(outptr);
       // Open a new jpg
       FILE* outptr = fopen(title, "w");
       if (outptr == NULL) {
@@ -55,9 +59,10 @@ int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
       fwrite(block, sizeof(block), 1, outptr);
       return build_png(inptr, title, count, outptr);
     }
-  } else {
-    return 0;
   }
+
+  fclose(outptr);
+  return 0;
 }
 
 int is_png_header(BYTE block[]) {
