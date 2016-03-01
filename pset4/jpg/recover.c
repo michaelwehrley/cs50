@@ -15,11 +15,11 @@ typedef uint8_t BYTE;
 int build_png(FILE* inptr, char title[], int count, FILE* outptr);
 int is_png_header(BYTE block[]);
 const int PNG_BLOCK = 512;
+BYTE block[PNG_BLOCK];
 
 int main(int argc, char* argv[]) {
   // Open memory card file:
   FILE* inptr = fopen("card.raw", "r");
-  // FILE* inptr = fopen("card_copy.raw", "r");
   if (inptr == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
 }
 
 int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
-  BYTE block[PNG_BLOCK];
   if (fread(&block, sizeof(BYTE), PNG_BLOCK, inptr) == PNG_BLOCK) {
     if (is_png_header(block)) {
       // fclose(outptr);
