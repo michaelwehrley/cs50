@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
   char title[9]; // FIX COUNTING - string literal
   int count = 0;
-  sprintf(title, "00%d.jpg", count);
+  // sprintf(title, ((floor (log10 (abs (count))) + 1) ) + "%d.jpg", count);
   FILE* outptr = fopen(title, "w");
   if (outptr == NULL) {
     printf("something went wrong and file could not be opened");
@@ -56,7 +56,9 @@ int build_png(FILE* inptr, char title[], int count, FILE* outptr) {
       count++;
       return build_png(inptr, title, count, outptr);
     } else {
-      fwrite(block, sizeof(block), 1, outptr);
+      if (count != 0) {
+        fwrite(block, sizeof(block), 1, outptr);
+      }
       return build_png(inptr, title, count, outptr);
     }
   }
