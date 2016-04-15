@@ -1,5 +1,5 @@
-0.  TODO
-1.  TODO
+0.  Silicosis (previously miner's phthisis, grinder's asthma, potter's rot and other occupation-related names)[1] is a form of occupational lung disease caused by inhalation of crystalline silica dust, and is marked by inflammation and scarring in the form of nodular lesions in the upper lobes of the lungs.
+1.  getrusage: "get information about resource utilization"
 2.  TODO
 3.  TODO
 4.  TODO
