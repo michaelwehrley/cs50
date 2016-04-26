@@ -1,26 +1,28 @@
-// linked list
+// linked list -------------------------------------------
 typedef struct node {
   // LENGTH is max length of any word + the '\n'
   // We are creating and array here - grabing the needed memory.
   char word[LENGTH + 1];
-  struct node* text;
+  struct node* next;
 }
 node;
 
 node* node1 = malloc(sizeof(node)); // at this point in memory - specify the size of node piece of memory
 node* node2 = malloc(sizeof(node));
+// Note:
 (*node1).word = "Hello"; // node1->word = "Hello";
-node1->next = node2; // why not &node2;
 node1->word = "World";
 
-// hash table
+node1->next = node2; // why not &node2;
+
+// hash table -------------------------------------------
 typedef struct node {
   char word[LENGTH + 1]; // LENGTH is max length of any word
-  struct node* text;
+  struct node* next;
 }
 node;
 
-node* hashtable[500];
+node* hashtable[500]; // allocate enough memory for entire hashtable
 
 node* new_node = malloc(sizeof(node));
 fscanf(file, "%s", new_node->word)
@@ -33,8 +35,7 @@ while (cursor != NULL) {
   cursor = cursor->next;
 }
 
-// Tries
-
+// Tries -------------------------------------------
 typedef struct node
 {
   bool is_word;
