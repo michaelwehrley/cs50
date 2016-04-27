@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include <string.h>
 #include "dictionary.h"
 
 /**
@@ -29,33 +29,39 @@ bool check(const char* word)
 
 typedef struct node {
   char word[LENGTH + 1];
-  struct node* next_node_ptr;
+  struct node* next;
 }
 node;
 
+typedef struct alpha_node {
+  char letter;
+  struct node* next;
+}
+alpha_node;
+
 bool load(const char* dictionary)
 {
-  char* hashtable[500]; // allocate enough memory for entire hashtable
+  // create array of struct pointers
+  // remember to free it, can use alloca() instead
+  // allocate enough memory for entire hashtable
+  alpha_node* hashtable = malloc(sizeof(alpha_node) * 26);
+  // alpha_node* hashtable[26];
 
-  FILE* file = fopen(dictionary, "r");
-  if (file == NULL) {
-    return 1;
+  for (int i = 97; i < 123; i++) {
+    hashtable[i].letter = (char) i;
+    printf("Value of hashtable[%c]\n", hashtable[i].letter);
   }
 
-  int a;
-  for (int i = 0; i < 26; i++) {
-    hashtable[i] = NULL;
-  }
-
-  do {
-    node* new_node_ptr = malloc(sizeof(node));
-    a = fscanf(file, "%s", new_node_ptr->word);
-    printf("a: %d\n", a);
-  } while (a != EOF);
-    fclose(file);
-    return true;
-  }
-
+  // do {
+  //   node* new_node_ptr = malloc(sizeof(node));
+  //   a = fscanf(file, "%s", new_node_ptr->word);
+  //   printf("a: %d\n", a);
+  // } while (a != EOF);
+    // fclose(file);
+  //   return true;
+  // }
+  return true;
+}
 /**
  * Returns number of words in dictionary if loaded else 0 if not yet loaded.
  */
