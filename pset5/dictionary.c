@@ -26,41 +26,33 @@ bool check(const char* word)
  */
 
 // TODO
-
-typedef struct node {
-  char word[LENGTH + 1];
-  struct node* next;
-}
-node;
-
-typedef struct alpha_node {
-  char letter;
-  struct node* next;
-}
-alpha_node;
-
 bool load(const char* dictionary)
 {
-  // create array of struct pointers
-  // remember to free it, can use alloca() instead
-  // allocate enough memory for entire hashtable
-  alpha_node* hashtable = malloc(sizeof(alpha_node) * 26);
-  // alpha_node* hashtable[26];
+  char block[LENGTH + 1];
 
-  for (int i = 97; i < 123; i++) {
-    hashtable[i].letter = (char) i;
-    printf("Value of hashtable[%c]\n", hashtable[i].letter);
+  typedef struct node {
+    // char word[LENGTH + 1];
+    char* word_ptr;
+    struct node* next;
   }
+  node;
 
-  // do {
-  //   node* new_node_ptr = malloc(sizeof(node));
-  //   a = fscanf(file, "%s", new_node_ptr->word);
-  //   printf("a: %d\n", a);
-  // } while (a != EOF);
-    // fclose(file);
-  //   return true;
-  // }
-  return true;
+  FILE* file = fopen(dictionary, "r");
+  if (file == NULL) {
+    printf("something went wrong and file could not be opened");
+    return 1;
+  }
+  // fread(&block, sizeof(char), (LENGTH + 1), file); // keeps 45 bytes - WHY?
+  // fread(&block, (LENGTH + 1), sizeof(char), file); // read all 45 bytes
+  fread(&block, strlen(block) + 1, 1, file);
+  node* new_node = malloc(sizeof(node));
+  // new_node->word_ptr = malloc(sizeof(char) * (LENGTH + 1));
+  printf("block: %s\n", block);
+  new_node->word_ptr = block;
+  printf("new_node->word_ptr2: %s\n", new_node->word_ptr);
+  // free(new_node);
+  // fclose(file);
+  return false;
 }
 /**
  * Returns number of words in dictionary if loaded else 0 if not yet loaded.
