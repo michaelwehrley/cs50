@@ -28,11 +28,8 @@ bool check(const char* word)
 // TODO
 bool load(const char* dictionary)
 {
-  char block[LENGTH + 1];
-
   typedef struct node {
-    // char word[LENGTH + 1];
-    char* word_ptr;
+    char word[LENGTH + 1];
     struct node* next;
   }
   node;
@@ -41,18 +38,34 @@ bool load(const char* dictionary)
   if (file == NULL) {
     printf("something went wrong and file could not be opened");
     return 1;
+  } else {
+    char* buffer_ptr = malloc(sizeof(char));
+    *buffer_ptr = 'a';
+    printf("&buffer_ptr %p\n", &buffer_ptr);
+
+    char buffer[1];
+    int i = 0;
+    node new_node;
+
+    // while (!feof(file)) {
+    while (fread(&buffer, sizeof(char), 1, file) == 1) {
+      printf("&buffer: %p\n", &buffer);
+      printf("&buffer[0]: %p\n", &buffer[0]);
+
+      if (buffer[0] != '\n') {
+        new_node.word[i] = buffer[0];
+        printf("buffer: %c\n", buffer[0]);
+        printf("i: %d\n", i);
+        printf("new_node.word[i]: %c\n", new_node.word[i]);
+        printf("new_node.word: %s\n", new_node.word);
+
+        i = i + 1;
+      } else {
+        // create_new_node(file);
+      }
+    }
+    return true;
   }
-  // fread(&block, sizeof(char), (LENGTH + 1), file); // keeps 45 bytes - WHY?
-  // fread(&block, (LENGTH + 1), sizeof(char), file); // read all 45 bytes
-  fread(&block, strlen(block) + 1, 1, file);
-  node* new_node = malloc(sizeof(node));
-  // new_node->word_ptr = malloc(sizeof(char) * (LENGTH + 1));
-  printf("block: %s\n", block);
-  new_node->word_ptr = block;
-  printf("new_node->word_ptr2: %s\n", new_node->word_ptr);
-  // free(new_node);
-  // fclose(file);
-  return false;
 }
 /**
  * Returns number of words in dictionary if loaded else 0 if not yet loaded.
